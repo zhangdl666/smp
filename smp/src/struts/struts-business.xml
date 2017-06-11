@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <package name="business" namespace="/business" extends="default">
+        <action name="viewMySale" class="com.platform.business.action.SaleAction" method="viewMySale">
+            <result name="success">/view/business/sale/viewMySale.jsp</result>
+        </action>
+        <action name="saveMySale" class="com.platform.business.action.SaleAction" method="saveMySale">
+            <result name="success">/view/business/sale/viewMySale.jsp</result>
+        </action>
+        <action name="viewOtherSale" class="com.platform.business.action.SaleAction" method="viewOtherSale">
+            <result name="success">/view/business/sale/viewOtherSale.jsp</result>
+        </action>
+        <action name="saveOtherSale" class="com.platform.business.action.SaleAction" method="saveOtherSale">
+            <result name="success">/view/business/sale/viewOtherSale.jsp</result>
+        </action>
+        <action name="viewQuerySalePage" class="com.platform.business.action.SaleAction" method="viewQuerySalePage">
+            <result name="success">/view/business/sale/querySale.jsp</result>
+        </action>
+        <action name="querySale" class="com.platform.business.action.SaleAction" method="querySale">
+            <result name="success">/view/business/sale/querySale.jsp</result>
+        </action>
+        <action name="deleteSaleById" class="com.platform.business.action.SaleAction" method="deleteSaleById">
+            <result name="success">/view/business/sale/querySale.jsp</result>
+        </action>
+        <action name="selectSaleUser" class="com.platform.business.action.SaleAction" method="selectSaleUser">
+            <result name="success">/view/business/sale/selectSaleUser.jsp</result>
+        </action>
+        <action name="selectProduct" class="com.platform.business.action.SaleAction" method="selectProduct">
+            <result name="success">/view/business/sale/selectProduct.jsp</result>
+        </action>
+        <action name="saleReport" class="com.platform.report.action.SaleReportAction" method="viewSaleReport">
+            <result name="success">/view/business/sale/saleReport.jsp</result>
+        </action>
+        <action name="saleReportDetail" class="com.platform.report.action.SaleReportAction" method="viewSaleReportDetail">
+            <result name="success">/view/business/sale/saleReportDetail.jsp</result>
+        </action>
+    </package>
+</struts>
