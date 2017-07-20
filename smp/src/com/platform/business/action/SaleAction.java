@@ -1,8 +1,10 @@
 package com.platform.business.action;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,9 +15,11 @@ import org.apache.log4j.Logger;
 import com.platform.business.bo.SaleQueryBo;
 import com.platform.business.bo.SaleStat;
 import com.platform.business.pojo.Product;
+import com.platform.business.pojo.Salary;
 import com.platform.business.pojo.Sale;
 import com.platform.business.service.BusinessNumberService;
 import com.platform.business.service.ProductService;
+import com.platform.business.service.SalaryService;
 import com.platform.business.service.SaleService;
 import com.platform.core.bo.Page;
 import com.platform.organization.bo.OrgUserBo;
@@ -37,7 +41,11 @@ public class SaleAction extends BaseAction {
 	private BusinessNumberService businessNumberService;
 	private ProductService productService;
 	private OrgUserService orgUserService;
+	private SalaryService salaryService;
+	private String year;
+	private String month;
 	
+	private List<Salary> salaryList;
 	private String treeNodeData;
 	private String checkedIds;
 	
@@ -75,6 +83,38 @@ public class SaleAction extends BaseAction {
 
 	public void setTreeNodeData(String treeNodeData) {
 		this.treeNodeData = treeNodeData;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
+	}
+
+	public String getMonth() {
+		return month;
+	}
+
+	public void setMonth(String month) {
+		this.month = month;
+	}
+
+	public SalaryService getSalaryService() {
+		return salaryService;
+	}
+
+	public void setSalaryService(SalaryService salaryService) {
+		this.salaryService = salaryService;
+	}
+
+	public List<Salary> getSalaryList() {
+		return salaryList;
+	}
+
+	public void setSalaryList(List<Salary> salaryList) {
+		this.salaryList = salaryList;
 	}
 
 	public String getCheckedIds() {
@@ -343,6 +383,37 @@ public class SaleAction extends BaseAction {
 		params.put("rowName", getRequest().getParameter("rowName"));
 		params.put("columnName", getRequest().getParameter("columnName"));
 //		signList = workHireReportService.viewWorkHireDetails(params);
+		return SUCCESS;
+	}
+	
+	public String viewSalaryCalcuPage() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.MONTH, -1);
+		Date date = calendar.getTime();
+		//初始化为上月
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+		String yearMonth = sdf.format(date);
+		salaryList = salaryService.querySalary(yearMonth);
+		year = yearMonth.substring(0, 4);
+		month = yearMonth.substring(4);
+		return SUCCESS;
+	}
+	
+	public String salaryCalcu(){
+		salaryService.calcuSalary(year + month);
+		salaryList = salaryService.querySalary(year + month);
+		return SUCCESS;
+	}
+	
+	public String salaryReCalcu(){
+		salaryService.deleteSalaryByYearMonth(year + month);
+		salaryService.calcuSalary(year + month);
+		salaryList = salaryService.querySalary(year + month);
+		return SUCCESS;
+	}
+	
+	public String salaryQuery(){
+		salaryList = salaryService.querySalary(year + month);
 		return SUCCESS;
 	}
 }

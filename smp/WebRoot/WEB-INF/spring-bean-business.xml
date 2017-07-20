@@ -7,6 +7,7 @@
 	<bean id="businessOpinionDao" class="com.platform.business.dao.BusinessOpinionDaoImpl"></bean>
 	<bean id="saleDao" class="com.platform.business.dao.SaleDaoImpl"></bean>
 	<bean id="productDao" class="com.platform.business.dao.ProductDaoImpl"></bean>
+	<bean id="salaryDao" class="com.platform.business.dao.SalaryDaoImpl"></bean>
 	
 	<bean id="businessMessageService" class="com.platform.business.service.BusinessMessageServiceImpl"></bean>
 	<bean id="businessNumberService" class="com.platform.business.service.BusinessNumberServiceImpl"></bean>
@@ -14,5 +15,5 @@
 	<bean id="saleService" class="com.platform.business.service.SaleServiceImpl"></bean>
 	<bean id="productService" class="com.platform.business.service.ProductServiceImpl"></bean>
 	<bean id="saleReportService" class="com.platform.report.service.SaleReportServiceImpl"></bean>
-	
+	<bean id="salaryService" class="com.platform.business.service.SalaryServiceImpl"></bean>
 </beans>

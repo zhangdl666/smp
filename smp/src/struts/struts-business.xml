@@ -38,5 +38,19 @@
         <action name="saleReportDetail" class="com.platform.report.action.SaleReportAction" method="viewSaleReportDetail">
             <result name="success">/view/business/sale/saleReportDetail.jsp</result>
         </action>
+        
+        <!-- 工资管理 -->
+        <action name="viewSalaryCalcuPage" class="com.platform.business.action.SaleAction" method="viewSalaryCalcuPage">
+            <result name="success">/view/business/sale/salaryCalcu.jsp</result>
+        </action>
+        <action name="salaryCalcu" class="com.platform.business.action.SaleAction" method="salaryCalcu">
+            <result name="success">/view/business/sale/salaryCalcu.jsp</result>
+        </action>
+        <action name="salaryReCalcu" class="com.platform.business.action.SaleAction" method="salaryReCalcu">
+            <result name="success">/view/business/sale/salaryCalcu.jsp</result>
+        </action>
+        <action name="salaryQuery" class="com.platform.business.action.SaleAction" method="salaryQuery">
+            <result name="success">/view/business/sale/salaryCalcu.jsp</result>
+        </action>
     </package>
 </struts>
