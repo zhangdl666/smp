@@ -63,10 +63,10 @@
 					<div class="col-sm-10 form-inline">
 						<div class="input-group col-sm-10">
 		                	<s:select class="form-control" style="width: auto;" list="#{'2017':'2017','2018':'2018','2019':'2019','2020':'2020','2021':'2021','2022':'2022' }" 
-		                		listKey="key" listValue="value" name="year">
+		                		listKey="key" listValue="value" name="year" onchange="refreshResult()">
 		                	</s:select>
 		                	<s:select class="form-control" style="width: auto;" list="#{'01':'01','02':'02','03':'03','04':'04','05':'05','06':'06','07':'07','08':'08','09':'09','10':'10','11':'11','12':'12' }" 
-		                		listKey="key" listValue="value" name="month">
+		                		listKey="key" listValue="value" name="month" onchange="refreshResult()">
 		                	</s:select>
 						</div>
 					</div>
@@ -99,6 +99,8 @@
 								<th>级别</th>
 								<th>工资A</th>
 								<th>工资B</th>
+								<th>工资C</th>
+								<th>工资D</th>
 								<th>工资合计</th>
 							</tr>
 						</thead>
@@ -115,6 +117,8 @@
 										<td><s:property value='userLevel' /></td>
 										<td><s:property value='salaryA' /></td>
 										<td><s:property value='salaryB' /></td>
+										<td><s:property value='salaryC' /></td>
+										<td><s:property value='salaryD' /></td>
 										<td><s:property value='salaryTotal' /></td>
 									</tr>
 								</s:iterator>
@@ -151,6 +155,10 @@ function salaryReCalcu() {
 	}
 	var _url = "business/salaryReCalcu.action";
 	document.getElementById("queryForm").action = _url;
+	$("#queryForm").submit();
+}
+
+function refreshResult(){
 	$("#queryForm").submit();
 }
 </script>
