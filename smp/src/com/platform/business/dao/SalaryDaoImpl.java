@@ -57,4 +57,24 @@ public class SalaryDaoImpl implements SalaryDao {
 		return this.querySalary(yearMonth);
 	}
 
+	@Override
+	public List<Salary> queryBelowUserSalary(String yearMonth, String userId) {
+		String sql = "select s from Salary s,OrgUser u where s.userId = u.id and s.yearMonth = ? and u.managerId = ? order by s.salaryTotal desc";
+		Query query = sessionFactory.getCurrentSession().createQuery(sql);
+		query.setParameter(0, yearMonth);
+		query.setParameter(1, userId);
+		List<Salary> list = query.list();
+		return list;
+	}
+
+	@Override
+	public Salary getSalary(String yearMonth, String userId) {
+		String hql = "select s from Salary s where s.yearMonth = ? and s.userId = ?";
+		Query query = sessionFactory.getCurrentSession().createQuery(hql);
+		query.setString(0, yearMonth);
+		query.setString(1, userId);
+		
+		return (Salary) query.uniqueResult();
+	}
+
 }

@@ -52,5 +52,16 @@
         <action name="salaryQuery" class="com.platform.business.action.SaleAction" method="salaryQuery">
             <result name="success">/view/business/sale/salaryCalcu.jsp</result>
         </action>
+        
+        <!-- 工资预计算 -->
+        <action name="viewPrepareSalaryCalcuPage" class="com.platform.business.action.SaleAction" method="viewPrepareSalaryCalcuPage">
+            <result name="success">/view/business/sale/salaryPrepareCalcu.jsp</result>
+        </action>
+        <action name="prepareSalaryCalcu" class="com.platform.business.action.SaleAction" method="prepareSalaryCalcu">
+            <result name="success">/view/business/sale/salaryPrepareCalcu.jsp</result>
+        </action>
+        <action name="showBelowUserList" class="com.platform.business.action.SaleAction" method="showBelowUserList">
+            <result name="success">/view/business/sale/belowUserSalaryList.jsp</result>
+        </action>
     </package>
 </struts>

@@ -1,5 +1,7 @@
 package com.platform.business.action;
 
+import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -13,7 +15,6 @@ import net.sf.json.JSONArray;
 import org.apache.log4j.Logger;
 
 import com.platform.business.bo.SaleQueryBo;
-import com.platform.business.bo.SaleStat;
 import com.platform.business.pojo.Product;
 import com.platform.business.pojo.Salary;
 import com.platform.business.pojo.Sale;
@@ -48,10 +49,14 @@ public class SaleAction extends BaseAction {
 	private List<Salary> salaryList;
 	private String treeNodeData;
 	private String checkedIds;
+	private Salary salary;
+	private Salary prepareSalary;
 	
 	private String tableStr;
 	
 	private String name;
+	private String saleUserName;
+	private String saleUserId;
 
 	public String getName() {
 		return name;
@@ -59,6 +64,38 @@ public class SaleAction extends BaseAction {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getSaleUserName() {
+		return saleUserName;
+	}
+
+	public void setSaleUserName(String saleUserName) {
+		this.saleUserName = saleUserName;
+	}
+
+	public String getSaleUserId() {
+		return saleUserId;
+	}
+
+	public void setSaleUserId(String saleUserId) {
+		this.saleUserId = saleUserId;
+	}
+
+	public Salary getSalary() {
+		return salary;
+	}
+
+	public void setSalary(Salary salary) {
+		this.salary = salary;
+	}
+
+	public Salary getPrepareSalary() {
+		return prepareSalary;
+	}
+
+	public void setPrepareSalary(Salary prepareSalary) {
+		this.prepareSalary = prepareSalary;
 	}
 
 	public String getTableStr() {
@@ -416,4 +453,141 @@ public class SaleAction extends BaseAction {
 		salaryList = salaryService.querySalary(year + month);
 		return SUCCESS;
 	}
+	
+	//跳转到工资预计算页面
+	public String viewPrepareSalaryCalcuPage(){
+		
+		return SUCCESS;
+	}
+	
+	//工资预计算
+	public String prepareSalaryCalcu(){
+		//第一步  计算用户级别及返利标准
+		double comulativeAmount = (salary.getComulativeAmount()==null?0:salary.getComulativeAmount()) + (salary.getAmount()==null?0:salary.getAmount());
+		int c = 0;//下级累计销售额大于2.8万网体个数
+		String userLevel = "";
+		if(salaryList!=null && salaryList.size()>0) {
+			for(int i=0;i<salaryList.size();i++){
+				Salary s = salaryList.get(i);
+				if((s.getComulativeAmountMonth()==null?0:s.getComulativeAmountMonth() + s.getComulativeAmount()) > 28000){
+					c = c + 1;
+				}
+				comulativeAmount = comulativeAmount + s.getComulativeAmount();
+			}
+		}
+		
+		if(c>=6){
+			userLevel = "高级经理";
+		}else if(c>=3){
+			userLevel = "业务经理";
+		}else if(c>=2){
+			userLevel = "高级主管";
+		}else if(c>=1){
+			userLevel = "业务主管";
+		}else if(comulativeAmount >= 10000){
+			userLevel = "高级员工";
+		}else if(comulativeAmount >= 3000){
+			userLevel = "公司员工";
+		}else if(comulativeAmount >= 500){
+			userLevel = "正式会员";
+		}else{
+			userLevel = "体验会员";
+		}
+		
+		//计算工资A
+		double salaryA = 0;
+		double salaryB = 0;
+		if(salaryList==null || salaryList.size()==0){//无网体
+			if(userLevel.equals("") || userLevel.equals("") || userLevel.equals("")) {
+				salaryA = salary.getAmount() * 0.24;
+			}else {
+				salaryA = salary.getAmount() * getRebate(userLevel);
+			}
+		}else {
+			salaryA = salary.getAmount() * getRebate(userLevel);
+		}
+		
+		//计算工资B
+		if(isHaveSalaryB(userLevel, salary.getAmount())){
+			if(salaryList!=null && salaryList.size()>0){
+				double rebate = getRebate(userLevel);
+				for(int j=0; j<salaryList.size(); j++) {
+					Salary s = salaryList.get(j);
+					salaryB = salaryB + (rebate - getRebate(s.getUserLevel())) * (s.getComulativeAmountMonth()==null?0:s.getComulativeAmountMonth());
+				}
+			}
+		}
+		
+		//工资合计
+		prepareSalary = new Salary();
+		prepareSalary.setSalaryA(salaryA);
+		prepareSalary.setSalaryB(salaryB);
+		prepareSalary.setSalaryTotal(salaryA + salaryB);
+		return SUCCESS;
+	}
+	
+	private double getRebate(String userLevel) {
+		if(userLevel.equals("体验会员")){
+			return 0.1;
+		}else if(userLevel.equals("正式会员")){
+			return 0.15;
+		}else if(userLevel.equals("公司员工")){
+			return 0.18;
+		}else if(userLevel.equals("高级员工")){
+			return 0.21;
+		}else if(userLevel.equals("业务主管")){
+			return 0.24;
+		}else if(userLevel.equals("高级主管")){
+			return 0.26;
+		}else if(userLevel.equals("业务经理")){
+			return 0.28;
+		}else if(userLevel.equals("高级经理")){
+			return 0.30;
+		}
+		return 0;
+	}
+	
+	private boolean isHaveSalaryB(String userLevel,double amount){
+		if(userLevel.equals("正式会员") && amount >= 10){
+			return true;
+		}else if(userLevel.equals("公司员工") && amount >= 10){
+			return true;
+		}else if(userLevel.equals("高级员工") && amount >= 100){
+			return true;
+		}else if(userLevel.equals("业务主管") && amount >= 100){
+			return true;
+		}else if(userLevel.equals("高级主管") && amount >= 200){
+			return true;
+		}else if(userLevel.equals("业务经理") && amount >= 300){
+			return true;
+		}else if(userLevel.equals("高级经理") && amount >= 500){
+			return true;
+		}
+		return false;
+	}
+	
+	//查询其下级网体上月工资数据
+	public String showBelowUserList(){
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+		Calendar cal = Calendar.getInstance();
+		Date date = cal.getTime();
+		try {
+			date = sdf.parse(year + month);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		cal.setTime(date);
+		cal.add(Calendar.MONTH, -1);
+		String yearMonth = sdf.format(cal.getTime());
+		salary = salaryService.getSalary(yearMonth, id);
+		salaryList = salaryService.queryBelowUserSalary(yearMonth, id);
+		return SUCCESS;
+	}
+	
+	 public String formatDouble(double s){
+	      DecimalFormat fmt = new DecimalFormat("0.00");
+	      return fmt.format(s);
+	  }
+	
 }

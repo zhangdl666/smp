@@ -43,4 +43,14 @@ public class SalaryServiceImpl implements SalaryService {
 		return salaryDao.calcuSalary(yearMonth);
 	}
 
+	@Override
+	public List<Salary> queryBelowUserSalary(String yearMonth, String userId) {
+		return salaryDao.queryBelowUserSalary(yearMonth, userId);
+	}
+
+	@Override
+	public Salary getSalary(String yearMonth, String userId) {
+		return salaryDao.getSalary(yearMonth, userId);
+	}
+
 }

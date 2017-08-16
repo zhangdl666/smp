@@ -15,4 +15,20 @@ public interface SalaryService {
 	public List<Salary> querySalary(String yearMonth);
 
 	public int deleteSalaryByYearMonth(String yearMonth);
+	
+	/**
+	 * 查询用户直接下级网体工资数据
+	 * @param yearMonth
+	 * @param userId
+	 * @return
+	 */
+	public List<Salary> queryBelowUserSalary(String yearMonth,String userId);
+	
+	/**
+	 * 查询用户指定月份工资
+	 * @param yearMonth
+	 * @param userId
+	 * @return
+	 */
+	public Salary getSalary(String yearMonth,String userId);
 }

@@ -38,6 +38,9 @@ public class Salary {
 	@Column(name="CUMULATIVE_AMOUNT")
 	private Double comulativeAmount;
 	
+	@Column(name="CUMULATIVE_AMOUNT_MONTH")
+	private Double comulativeAmountMonth;
+	
 	@Column(name="COUNT28")
 	private Integer count28;
 	
@@ -192,5 +195,14 @@ public class Salary {
 	public void setCalcuTime(Date calcuTime) {
 		this.calcuTime = calcuTime;
 	}
+
+	public Double getComulativeAmountMonth() {
+		return comulativeAmountMonth;
+	}
+
+	public void setComulativeAmountMonth(Double comulativeAmountMonth) {
+		this.comulativeAmountMonth = comulativeAmountMonth;
+	}
+	
 	
 }
