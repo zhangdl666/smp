@@ -456,7 +456,11 @@ public class SaleAction extends BaseAction {
 	
 	//跳转到工资预计算页面
 	public String viewPrepareSalaryCalcuPage(){
-		
+		Date date = Calendar.getInstance().getTime();
+		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("MM");
+		year = sdf1.format(date);
+		month = sdf2.format(date);
 		return SUCCESS;
 	}
 	

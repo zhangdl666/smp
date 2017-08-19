@@ -22,7 +22,7 @@
 <script src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/jquery.ztree.core.js"></script>
 <script type="text/javascript" src="js/jquery.ztree.excheck.js"></script>
-<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/common.js" charset="gbk"></script>
 <SCRIPT type="text/javascript">
 	var mess = "${message}";
 	if(mess!=null && mess!="") {

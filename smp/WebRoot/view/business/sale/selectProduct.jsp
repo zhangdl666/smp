@@ -39,7 +39,7 @@
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/jquery.form.js"></script>
-<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/common.js" charset="gbk"></script>
 <script type="text/javascript" src="js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 <script type="text/javascript" src="js/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
 </head>
@@ -127,7 +127,8 @@ function queryProduct(){
 function selectProduct(pid) {
 	var pName = document.getElementById("name" + pid).innerHTML;
 	var pUnitPrice = document.getElementById("unitPrice" + pid).innerHTML;
-	window.returnValue = pid + ";" + pName + ";" + pUnitPrice;
+	//window.returnValue = pid + ";" + pName + ";" + pUnitPrice;
+	window.opener.showProductBack(pid + ";" + pName + ";" + pUnitPrice);
     window.close();
 }
 

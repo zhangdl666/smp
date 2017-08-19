@@ -81,7 +81,7 @@
 			<div class="form-group">
 				<label class="col-sm-2 control-label">销售人</label>
 				<div class="col-sm-2">
-					<s:textfield name="sale.saleUserName" id="saleUserName" readonly="readonly" onclick="showUserTree('saleUserId','saleUserName')" class="form-control"></s:textfield>
+					<s:textfield name="sale.saleUserName" id="saleUserName" readonly="readonly" onclick="showUserTree()" class="form-control"></s:textfield>
 					<s:hidden name="sale.saleUserId" id="saleUserId"></s:hidden>
 				</div>
 				<label class="col-sm-2 control-label">销售时间</label>
@@ -174,14 +174,17 @@ $('.form_date').datetimepicker({
 
 $(document).ready(initValidator());
 
-function showUserTree(ids,names) {
+function showUserTree() {
 	var checkedIds = document.getElementById("saleUserId").value;
 	var _url = "business/selectSaleUser.action?checkedIds=" + checkedIds;
-	var values = window.showModalDialog(_url,"dialogWidth=50px;dialogHeight=100px");
+	//var values = window.showModalDialog(_url,"dialogWidth=50px;dialogHeight=100px");
+	window.open(_url,'newWin','modal=yes,width=300,height=500');
+}
+function showUserTreeBack(values){
 	if(values!=null && values!="") {
 		var aRetValue = values.split(";");
-		document.getElementById(ids).value = aRetValue[0];
-		document.getElementById(names).value = aRetValue[1];
+		document.getElementById("saleUserId").value = aRetValue[0];
+		document.getElementById("saleUserName").value = aRetValue[1];
 	}
 }
 

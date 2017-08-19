@@ -281,10 +281,8 @@ function selectRoles() {
 	var checkedIds = document.getElementById("roleIds").value;
 	var dId = document.getElementById("deptId").value;
 	var _url = "organization/selectRoles.action?deptId=" + dId + "&&checkedIds=" + checkedIds;
-	var returnData = window.showModalDialog(_url,"dialogWidth=50px;dialogHeight=100px");
-	if (!(returnData == undefined)){
-        setParticipant(returnData, "roleIds", "roleNames");
-    }
+	//var returnData = window.showModalDialog(_url,"dialogWidth=50px;dialogHeight=100px");
+	window.open(_url,'newWin','modal=yes,width=300,height=500');
 }
 
 function setParticipant(val, id, name) {

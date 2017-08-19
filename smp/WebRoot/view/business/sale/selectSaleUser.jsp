@@ -23,7 +23,7 @@
 <script type="text/javascript" src="js/jquery.ztree.core.js"></script>
 <script type="text/javascript" src="js/jquery.ztree.excheck.js"></script>
 <script type="text/javascript" src="js/ztree.js"></script>
-<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/common.js" charset="gbk"></script>
 <SCRIPT type="text/javascript">
 	var mess = "${message}";
 	if(mess!=null && mess!="") {
@@ -63,7 +63,7 @@
 		});
 	}
 	function cancel(){
-		window.returnValue = null;
+		//window.returnValue = null;
 		window.close();
 	}
 	
@@ -85,7 +85,7 @@
         	ids = ids.substr(0,ids.length - 1);
         	names = names.substr(0,names.length - 1);
         }
-        window.returnValue = ids + ";" + names;
+        window.opener.showUserTreeBack(ids + ";" + names);
         window.close();
 	}
 	

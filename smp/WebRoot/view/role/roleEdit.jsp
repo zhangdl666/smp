@@ -151,14 +151,16 @@ function showUserTree() {
 	var checkedIds = "";
 	var rId = document.getElementById("roleId").value;
 	var _url = "organization/selectUsersForRole.action?roleId=" + rId + "&&checkedIds=" + checkedIds;
-	window.showModalDialog(_url,"dialogWidth=50px;dialogHeight=100px");
+	window.open(_url,'newWin','modal=yes,width=300,height=500');
+	//window.showModalDialog(_url,"dialogWidth=50px;dialogHeight=100px");
 }
 
 function showMenuTree() {
 	var checkedIds = "";
 	var rId = document.getElementById("roleId").value;
 	var _url = "organization/selectMenusForRole.action?roleId=" + rId + "&&checkedIds=" + checkedIds;
-	window.showModalDialog(_url,"dialogWidth=50px;dialogHeight=100px");
+	//window.showModalDialog(_url,"dialogWidth=50px;dialogHeight=100px");
+	window.open(_url,'newWin','modal=yes,width=300,height=500');
 }
 $(document).ready(initValidator());
 
